@@ -11,13 +11,16 @@ export const verifyStudent = asyncHandler(async (req, res) => {
     return res.status(400).json({ verified: false, message: 'Please provide both serial number and a credential' });
   }
 
+  const cleanSerial = serialNo.trim();
+  const cleanCred = credential.trim();
+
   const student = await prisma.student.findFirst({
     where: {
-      serialNo,
+      serialNo: { equals: cleanSerial, mode: 'insensitive' },
       OR: [
-        { mobileNumber: credential },
-        { email: credential },
-        { enrollmentNumber: credential }
+        { mobileNumber: { equals: cleanCred, mode: 'insensitive' } },
+        { email: { equals: cleanCred, mode: 'insensitive' } },
+        { enrollmentNumber: { equals: cleanCred, mode: 'insensitive' } }
       ]
     }
   });
