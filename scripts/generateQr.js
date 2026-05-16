@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const targetDomain = process.env.FRONTEND_URL || 'https://domain.com';
+const targetDomain = process.env.FRONTEND_URL || 'https://www.earthassociation.in';
 const verifyUrl = `${targetDomain}/verify`;
 
 const publicDir = path.join(__dirname, '../../EarthAssociation/public');
