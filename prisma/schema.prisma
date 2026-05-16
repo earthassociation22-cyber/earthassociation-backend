@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model Student {
+  id               String            @id @default(uuid())
+  serialNo         String            @unique
+  name             String
+  fatherName       String
+  studentClass     String
+  mobileNumber     String?
+  collegeName      String
+  joiningDate      String
+  endingDate       String
+  email            String?
+  address          String
+  certificateUrl   String?
+  studentPhotoUrl  String?
+  rollNumber       String
+  enrollmentNumber String
+  category         String
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  VerificationLog  VerificationLog[]
+}
+
+model VerificationLog {
+  id         String   @id @default(uuid())
+  studentId  String
+  student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  verifiedAt DateTime @default(now())
+  ipAddress  String?
+  userAgent  String?
+}
